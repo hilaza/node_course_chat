@@ -21,11 +21,12 @@ io.on('connection', (socket) => {
     // sends to everybody BUT the connected user
     socket.broadcast.emit('newMessage', generateMessage('admin', 'new user joined'));
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
 
         // sends to everybody
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback();
 
         // socket.broadcast.emit('newMessage', {
         //     from: message.from,
